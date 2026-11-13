@@ -174,7 +174,11 @@ Accuracy, Balanced Accuracy, Macro F1, Weighted F1, and Mean Prediction Confiden
 
 ## 📸 Screenshots
 
-> _Add screenshots of each dashboard tab here._
+<img width="1906" height="971" alt="Screenshot 2026-11-13 124341" src="https://github.com/user-attachments/assets/f7a350ef-c197-462f-82e5-719fcf506838" />
+
+<img width="1912" height="976" alt="Screenshot 2026-11-13 124409" src="https://github.com/user-attachments/assets/c3fa2876-1b0c-44a3-97f9-04d47b2f9349" />
+
+<img width="1907" height="970" alt="Screenshot 2026-11-13 124431" src="https://github.com/user-attachments/assets/6ca1cd85-dd29-4462-8591-abe6fd198f39" />
 
 ---
 
