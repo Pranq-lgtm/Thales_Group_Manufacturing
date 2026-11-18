@@ -615,7 +615,9 @@ def main():
                         "Efficiency Impact Score": local_contrib.values,
                     }
                 )
+                .set_index("Feature")
                 .reindex(local_contrib.abs().sort_values(ascending=True).tail(10).index)
+                .reset_index()
             )
             local_df["Direction"] = np.where(
                 local_df["Efficiency Impact Score"] >= 0, "Positive Driver (Boosts Efficiency)", "Negative Driver (Drops Efficiency)"
