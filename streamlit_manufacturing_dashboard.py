@@ -608,16 +608,19 @@ def main():
                 directional_sign[neg_col] = -1.0
 
             local_contrib = z_scores * directional_sign * (imp_vals + 0.5)
+            local_df = pd.DataFrame(
+                {
+                    "Feature": list(FEATURE_COLS),
+                    "Efficiency Impact Score": [float(v) for v in local_contrib.values],
+                }
+            )
+            local_df["_abs"] = local_df["Efficiency Impact Score"].abs()
             local_df = (
-                pd.DataFrame(
-                    {
-                        "Feature": FEATURE_COLS,
-                        "Efficiency Impact Score": local_contrib.values,
-                    }
-                )
-                .set_index("Feature")
-                .reindex(local_contrib.abs().sort_values(ascending=True).tail(10).index)
-                .reset_index()
+                local_df
+                .nlargest(10, "_abs")
+                .sort_values("_abs", ascending=True)
+                .drop(columns=["_abs"])
+                .reset_index(drop=True)
             )
             local_df["Direction"] = np.where(
                 local_df["Efficiency Impact Score"] >= 0, "Positive Driver (Boosts Efficiency)", "Negative Driver (Drops Efficiency)"
@@ -647,6 +650,9 @@ def main():
                 pd.crosstab(filtered_df["Operation_Mode"], filtered_df["Efficiency_Status"], normalize="index")
                 * 100.0
             ).reset_index()
+            for _ec in ["High", "Medium", "Low"]:
+                if _ec not in mode_ct.columns:
+                    mode_ct[_ec] = 0.0
             fig_mode = px.bar(
                 mode_ct,
                 x="Operation_Mode",
